@@ -27,7 +27,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.scss",
+              "./node_modules/leaflet/dist/leaflet.css",
+              "./node_modules/leaflet-draw/dist/leaflet.draw.css"
             ],
             "scripts": []
           },
@@ -87,6 +90,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -118,6 +122,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "image-tool"
 }
