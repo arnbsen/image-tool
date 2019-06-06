@@ -1,10 +1,34 @@
-import { Component, ViewChild} from '@angular/core';
+import { Component, ViewChild, HostBinding} from '@angular/core';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 import { tileLayer, latLng, Map, circle, LeafletEvent, LeafletMouseEvent } from 'leaflet';
 import * as L from 'leaflet';
 import { LeafletDirective } from '@asymmetrik/ngx-leaflet';
 
 @Component({
   selector: 'app-root',
+  animations: [
+    trigger('openClose', [
+      // ...
+      state('open', style({
+        opacity: 1
+      })),
+      state('closed', style({
+        opacity: 0
+      })),
+      transition('open => closed', [
+        animate('0.15s')
+      ]),
+      transition('closed => open', [
+        animate('0.1s')
+      ]),
+    ]),
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
@@ -12,20 +36,13 @@ export class AppComponent {
   title = 'image-tool';
   @ViewChild('leafletInstance', {static: true}) leafletInstance: LeafletDirective;
   refToMap: Map;
-  customMarker = L.Icon.extend({
-    options: {
-      shadowUrl: null,
-      iconAnchor: new L.Point(12, 12),
-      iconSize: new L.Point(24, 24),
-      iconUrl: 'http://joshuafrazier.info/images/firefox.svg'
-    }
-  });
+  mouseDown = false;
+  lastRef: any;
+  div1Disapper = true;
   options = {
-    marker: {
-      icon: this.customMarker
-    }
+   
   };
-
+  firstPoint : [number, number];
 
   layer = circle([0, 0], 50000000, {
     stroke: true,
@@ -40,9 +57,6 @@ export class AppComponent {
     edit: {
       edit: false,
       remove: false
-    },
-    marker: {
-      icon: this.customMarker
     }
   };
   polyArray = [];
@@ -88,5 +102,34 @@ export class AppComponent {
         }).bindTooltip('Click to complete Polygon').addEventListener('click', () => {
             this.drawPolygon('#000');
         }));
+  }
+
+  onMouseMove(event: LeafletMouseEvent) {
+    if(this.mouseDown) {
+      if(this.lastRef) {
+        this.lastRef.remove();
+      }
+      this.lastRef = L.rectangle([this.firstPoint, [event.latlng.lat, event.latlng.lng ] ], {
+        stroke: true,
+            color: '#000',
+            fill: true,
+            fillColor: '#000',
+            opacity: 0.5
+      })
+      this.refToMap.addLayer(this.lastRef);
+    }
+    
+  }
+
+  onMouseDown(event: LeafletMouseEvent) {
+      this.mouseDown = true;
+      this.firstPoint = [event.latlng.lat, event.latlng.lng ];
+  }
+
+
+  isOpen = true;
+ 
+  toggle() {
+    this.isOpen = !this.isOpen;
   }
 }

@@ -1,7 +1,13 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <button mat-button (click)="getMap()">Test Map</button>
 <button mat-raised-button color="primary" (click)="getMap()">Action To Take</button>
+<button mat-raised-button color="primary" (click)="
+toggle()">Animation</button>
 <button mat-raised-button color="primary" (click)="drawPolygon('#000000')">Draw Poly</button>
+<div [@openClose]="isOpen ? 'open' : 'closed'" >
+  <button mat-button (click)="getMap()">Test Map</button>
+<button mat-raised-button color="primary" (click)="getMap()">Action To Take</button>
+</div>
 
 <div style="height: 550px; width: 1000px"
   #leafletInstance
@@ -12,6 +18,8 @@
   (leafletMapReady)="onMapReady($event)"
   (leafletDrawStop)="addLayer($event)"
   (leafletClick) = "onMouseClick($event)"
+  (leafletMouseMove)=" onMouseMove($event)"
+  (leafletMouseDown)="onMouseDown($event)"
   >
-  <div [leafletLayer]="layer"></div>
+
 </div>

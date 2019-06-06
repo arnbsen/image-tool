@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LeafletModule.forRoot(),
     LeafletDrawModule.forRoot(),
     BrowserAnimationsModule,
-    MatButtonModule
+    MatButtonModule,
+    FlexLayoutModule
 
   ],
   providers: [],
