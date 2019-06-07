@@ -9,9 +9,8 @@ toggle()">Animation</button>
 <button mat-raised-button color="primary" (click)="getMap()">Action To Take</button>
 </div> -->
 <div style="width: 1000px; height: 60px;" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
-<button mat-mini-fab matTooltip="Add a label" color="primary" [ngStyle]="{'background-color': activeAction === 'add' ? '#16a085' : '#ecf0f1' }" [disabled]="!(activeAction === 'add')" (click)="activeAction='chooseshape'"><mat-icon>add</mat-icon></button>
 <button mat-mini-fab matTooltip="Draw Rectrangle" color="primary" [disabled]="!(activeAction === 'chooseshape')" (click)="activeAction='drawingshape'; drawAction = 'rect'"><mat-icon>crop_square</mat-icon></button>
-<button mat-mini-fab matTooltip="Draw Polygon" color="primary" [disabled]="!(activeAction === 'chooseshape')" (click)="activeAction='drawingshape'"><mat-icon>
+<button mat-mini-fab matTooltip="Draw Polygon" color="primary" [disabled]="!(activeAction === 'chooseshape')" (click)="activeAction='drawingshape'; drawAction = 'polygon'"><mat-icon>
 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
   y="0px" viewBox="0 0 15.993 15.993" style="enable-background:new 0 0 15.993 15.993;" xml:space="preserve">
   <g>
@@ -20,9 +19,8 @@ toggle()">Animation</button>
   </g>
   </svg>
 </mat-icon></button>
-<button mat-mini-fab matTooltip="Undo" style="background-color: #ecf0f1;" [disabled]="!(activeAction === 'drawingshape')"><mat-icon>undo</mat-icon></button>
-<button mat-mini-fab matTooltip="Redo" style="background-color: #ecf0f1;" [disabled]="!(activeAction === 'drawingshape')"><mat-icon>redo</mat-icon></button>
 <button mat-mini-fab matTooltip="Edit Shape" ><mat-icon>edit</mat-icon></button>
+<button mat-mini-fab matTooltip="Delete Last Rectrangle" color="warn" [disabled]="!(activeAction === 'drawingshape')" (click)="removeLastShape()"><mat-icon>close</mat-icon></button>
 <button mat-mini-fab matTooltip="Delete Shape" color="warn"><mat-icon>delete</mat-icon></button>
 </div>
 <div style="height: 550px; width: 1000px"
@@ -30,12 +28,13 @@ toggle()">Animation</button>
   leaflet
   [leafletZoom]="1"
   [leafletCenter]="center"
-  [leafletLayers]="layers"
+  [leafletLayers]="drawLayers.concat(drawLayerBuffer)"
   (leafletMapReady)="onMapReady($event)"
   (leafletDrawStop)="addLayer($event)"
   (leafletClick) = "onMouseClick($event)"
   (leafletMouseMove)=" onMouseMove($event)"
-  (leafletMouseDown)="onMouseDown($event)"
   >
-
 </div>
+<button mat-raised-button color="primary" (click)="putLabels('#27ae60')">Tag 1</button>
+<button mat-raised-button color="primary" (click)="putLabels('#e67e22')">Tag 2</button>
+<button mat-raised-button color="primary" (click)="putLabels('#8e44ad')">Tag 3</button>
